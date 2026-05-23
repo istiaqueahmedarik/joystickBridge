@@ -38,6 +38,7 @@ class JoySubscriber(Node):
             # Determine 6th value from buttons 2 and 4
             b2 = msg.buttons[2]
             b4 = msg.buttons[4]
+            b3 = msg.buttons[3]
             
             if b2 == 0 and b4 == 0:
                 btn_val = 1500
@@ -49,14 +50,22 @@ class JoySubscriber(Node):
                 btn_val = 1000
             else:
                 btn_val = 1500
+
+            btn_val1 = 1500
+            if(btn_val1==1):
+                btn_val1 = 2000;
                 
             mapped_axes.append(btn_val)
+            mapped_axes.append(btn_val1)
             
-            # Create UDP message and send
-            udp_msg = f"A:{mapped_axes}"
-            self.sock.sendto(udp_msg.encode('utf-8'), (self.udp_ip, self.udp_port))
-            
-            self.get_logger().info(f"Sent via UDP: {udp_msg}")
+            if msg.buttons[0] == 1:
+                # Create UDP message and send
+                udp_msg = f"A:{mapped_axes}"
+                self.sock.sendto(udp_msg.encode('utf-8'), (self.udp_ip, self.udp_port))
+                
+                self.get_logger().info(f"Sent via UDP: {udp_msg}")
+            else:
+                print("unarmed")
 
 def main(args=None):
     rclpy.init(args=args)
