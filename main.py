@@ -51,8 +51,8 @@ class JoySubscriber(Node):
             else:
                 btn_val = 1500
 
-            btn_val1 = 1500
-            if(btn_val1==1):
+            btn_val1 = 1000
+            if(b3==1):
                 btn_val1 = 2000;
                 
             mapped_axes.append(btn_val)
